@@ -1,0 +1,586 @@
+@font-face {
+    font-family: 'SamsungSharpSans';
+    src: url('fonts/SamsungSharpSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/* Example Usage */
+/* Default light mode styles */
+body {
+    align-items: center;
+    font-family: 'SamsungSharpSans', Arial, sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    background: rgb(255, 255, 255);
+background: linear-gradient(184deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%);
+    overflow: auto;  /* Allow scrolling */
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgb(46, 44, 44) 0%, rgba(101,101,122,1) 39%, rgba(102,109,128,1) 54%, rgb(46, 45, 45) 100%); /* Dark mode background */
+    color: #fff;
+}
+
+/* Sidebar button styles */
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ensure hamburger is at the top right */
+.menu-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000px; /* Make sure it stays on top */
+}
+
+.hamburger {
+    align-content: left;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.hamburger i {
+    align-content: left;
+    color: #546464;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: #222;
+    padding-top: 60px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+.sidebar.active {
+    transform: translateX(0);
+}
+.sidebar .logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.sidebar .logo img {
+    border: 4px solid #ffffff;
+    width: 80px;
+    border-radius: 50%;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar ul li {
+    margin: 20px 0;
+    text-align: center;
+}
+.sidebar ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    transition: background 0.3s ease;
+}
+.sidebar ul li a:hover {
+    background-color: #444;
+}
+/* Background Image */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('background.jpg'); /* Add your image path here */
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
+h1 {
+    font-family: 'Samsung Sharp Sans';
+    font-size: 14pt;
+    text-decoration: none;
+    text-align: center;
+   
+}
+p
+{
+    text-shadow: #080808;
+    box-shadow: 0 4px 10px rgba(44, 46, 48, 0.945);
+    border-radius: 12px;
+    background-color: #2c2c2e9d;
+    text-align: center;
+    font-family: 'Samsung Sharp Sans';
+    text-decoration: thin;
+}
+h2 {
+    font-size: 12pt;
+    font-family: 'Samsung Sharp Sans';
+    color: rgba(255, 255, 255, 0.918);
+    background-color: #00000065;
+}
+/* Article Styles */
+.article {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.article h3 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.article p {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Image Gallery */
+.image-gallery {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gallery-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Video Section */
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.video-container iframe {
+    border-radius: 10px;
+}
+
+/* Tabs Navigation */
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-shadow: #000000;
+    box-shadow: rgb(46, 46, 46);
+    color: #ffe600;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Style the details tag */
+details {
+    background-color: #8d839759; /* Luxury deep purple */
+    border: 2px solid #ffffffc2; /* Elegant purple border */
+    border-radius: 10px;
+    padding: 12px;
+    margin: 12px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Style the summary tag */
+summary {
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px;
+    background: rgb(73,74,75);
+background: linear-gradient(0deg, rgba(73,74,75,1) 0%, rgba(142,142,150,1) 48%, rgba(36,35,35,1) 100%);
+    color: #000000;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for summary */
+summary:hover {
+    background-color: #867bbb; /* Slightly lighter purple */
+    transform: scale(1.02);
+}
+
+/* When details are expanded */
+details[open] {
+    background-color: #496d96; /* Richer deep purple */
+    border-color: #ffffff;
+}
+
+
+/* Project Styles */
+.project {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Video Container */
+.video-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.video-container iframe {
+    border-radius: 10px;
+}
+
+/* Calculator Styles */
+.calculator {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.calculator input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(114, 113, 126, 0.507);
+    color: #0a0a0a;
+    text-align: right;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.calc-buttons button {
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(102, 101, 101, 0.548);
+    color: #000000;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.calc-buttons button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input,
+form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(107, 103, 103, 0.384);
+    color: #000000;
+    font-size: 1rem;
+}
+
+form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    bottom: auto;
+    text-align: center;
+    padding: 2px;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: 60px;
+    position: fixed;
+    align-items: center;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 5px;
+}
+
+form input,
+form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #007BFF;
+    color: #fff;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+/* Drawing Board Styles */
+#drawing-board {
+    border: 2px solid #fff;
+    background-color: #f0f0f0;
+    cursor: crosshair;
+    display: block;
+    margin-top: 20px;
+}
+
+button {
+    background: #007BFF;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    text-shadow: #ffffff;
+    text-align: center;
+    padding: 10px;
+background: linear-gradient(0deg, rgb(46, 46, 46) 0%, rgb(29, 28, 28) 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a :hover {
+    text-decoration: underline;
+}
+.editor-container {
+    background: #1a1a2e;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+.CodeMirror {
+    height: 300px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background: #1b2a53;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #0f3460;
+}
+
+iframe {
+    width: 100%;
+    height: 250px;
+    border: 1px solid #ccc;
+    background: white;
+}
+a {
+    text-decoration: none; /* Removes the default underline */
+    color: #ffffff; /* Changes the text color to blue */
+    font-weight: bold; /* Makes the text bold */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Styling for when the hyperlink is hovered over */
+a:hover {
+    color: #6a3ce7; /* Changes the text color to red when hovered */
+    text-decoration: underline; /* Adds underline on hover */
+}
+
+/* Styling for visited links */
+a:visited {
+    color: #9b59b6; /* Changes color of visited links */
+}
+
+/* Styling for active links (when clicked) */
+a:active {
+    color: #2ecc71; /* Changes color to green when the link is clicked */
+}
+.famous-lines {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.famous-lines p {
+    font-size: 1.2rem;
+    color: #fff;
+    max-width: 400px;
+}
+
+.round-image,
+.Rabindra-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #ffffff;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.round-image:hover,
+.Rabindra-image:hover {
+    transform: scale(1.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'SamsungSharpSans', sans-serif;
+}
+
+ /* Styling for the Instagram icon */
+ .instagram-link {
+    font-size: 32px; /* Adjust icon size */
+    color: #3f729b; /* Instagram blue color */
+    transition: color 0.3s ease;
+}
+
+.instagram-link:hover {
+    color: #e74c3c; /* Change color on hover */
+}
+@font-face {
+    font-family: 'LalSabuj';
+    src: url('LalSabuj_Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+p10{
+    text-shadow: rgb(0, 255, 149);
+}
+p12{
+    justify-content: center;
+    align-items: baseline;
+    font-family: 'LalSabuj';
+}
+/* Blurred Container with Gradient */
+.bllur-container {
+    position: relative;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.329), #d8d3ff63); /* Blue to Violet */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(49, 49, 49, 0.692);
+}

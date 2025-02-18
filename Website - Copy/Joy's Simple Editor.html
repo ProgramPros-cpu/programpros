@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Editor</title>
+  <style>
+    /* General styling for background and layout */
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f5b2d8, #b2d6f5);
+  margin: 0;
+  color: #333;
+}
+
+.container {
+  text-align: center;
+  max-width: 90%;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Styling the header */
+h1 {
+  font-size: 2em;
+  color: #4c5f91;
+  margin-bottom: 15px;
+}
+
+/* Styling the canvas */
+canvas {
+  border: 2px solid #4c5f91;
+  border-radius: 10px;
+  margin-top: 15px;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Styling for controls container */
+.controls {
+  margin-top: 20px;
+}
+
+/* Slider container for each control */
+.slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+/* Label styling */
+.slider-container label {
+  margin-right: 10px;
+  width: 100px;
+  text-align: right;
+  color: #4c5f91;
+  font-weight: bold;
+}
+
+/* Styling the sliders */
+input[type="range"] {
+  width: 150px;
+  margin: 0 10px;
+  -webkit-appearance: none;
+  height: 6px;
+  background: #e2e2e2;
+  border-radius: 5px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #4c5f91;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Styling for buttons */
+button {
+  background-color: #4c5f91;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+button:hover {
+  background-color: #6978b4;
+}
+
+button:active {
+  background-color: #3a4a7e;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 183, 94, 0.6);
+}
+
+/* Styling file input button */
+input[type="file"] {
+  display: block;
+  margin: 0 auto 20px;
+  font-size: 16px;
+  background-color: #4c5f91;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+  background-color: #6978b4;
+}
+
+input[type="file"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 183, 94, 0.6);
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Photo Editor</h1>
+    <input type="file" id="upload" accept="image/*">
+    <canvas id="canvas"></canvas>
+    <div class="controls">
+      <div class="slider-container">
+        <label>Brightness</label>
+        <button onclick="adjustValue('brightness', -0.1)">-</button>
+        <input type="range" id="brightness" min="0.5" max="2" step="0.1" value="1">
+        <button onclick="adjustValue('brightness', 0.1)">+</button>
+      </div>
+      <div class="slider-container">
+        <label>Contrast</label>
+        <button onclick="adjustValue('contrast', -0.1)">-</button>
+        <input type="range" id="contrast" min="0.5" max="2" step="0.1" value="1">
+        <button onclick="adjustValue('contrast', 0.1)">+</button>
+      </div>
+      <div class="slider-container">
+        <label>Vibrance</label>
+        <button onclick="adjustValue('vibrance', -0.1)">-</button>
+        <input type="range" id="vibrance" min="0" max="2" step="0.1" value="1">
+        <button onclick="adjustValue('vibrance', 0.1)">+</button>
+      </div>
+      <button onclick="autoEdit()">Auto Edit</button>
+      <button onclick="saveImage()">Save Image</button>
+      <button onclick="enableCropping()">Enable Cropping</button>
+<button onclick="disableCropping()">Disable Cropping</button>
+
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const upload = document.getElementById('upload');
+    const brightnessSlider = document.getElementById('brightness');
+    const contrastSlider = document.getElementById('contrast');
+    const vibranceSlider = document.getElementById('vibrance');
+
+    let img = new Image();
+    let originalImageData;
+
+    // Load the uploaded image onto the canvas
+    upload.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        img.src = event.target.result;
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+          originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        };
+      };
+      
+      reader.readAsDataURL(file);
+    });
+
+    // Update filters when sliders are changed
+    brightnessSlider.addEventListener('input', applyFilters);
+    contrastSlider.addEventListener('input', applyFilters);
+    vibranceSlider.addEventListener('input', applyFilters);
+
+    function applyFilters() {
+      ctx.putImageData(originalImageData, 0, 0);
+
+      ctx.filter = `brightness(${brightnessSlider.value}) contrast(${contrastSlider.value})`;
+      ctx.drawImage(canvas, 0, 0);
+
+      applyVibrance(vibranceSlider.value);
+    }
+
+    function applyVibrance(vibrance) {
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imageData.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+
+        const max = Math.max(r, g, b);
+        const amt = ((max / 255) * vibrance) - 1;
+
+        data[i] += (max - r) * amt;
+        data[i + 1] += (max - g) * amt;
+        data[i + 2] += (max - b) * amt;
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+      ctx.filter = 'none';
+    }
+
+    function adjustValue(type, change) {
+      const slider = document.getElementById(type);
+      slider.value = parseFloat(slider.value) + change;
+      applyFilters();
+    }
+
+    function autoEdit() {
+      brightnessSlider.value = 1.5;
+      contrastSlider.value = 0.75;
+      vibranceSlider.value = 1.9;
+      applyFilters();
+    }
+
+    // Save the edited image
+    function saveImage() {
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = 'edited-image.png';
+      link.click();
+    }
+    let isCropping = false;
+let cropStartX = 0;
+let cropStartY = 0;
+let cropWidth = 0;
+let cropHeight = 0;
+
+// Add crop event listeners
+canvas.addEventListener('mousedown', (e) => {
+  if (isCropping) {
+    cropStartX = e.offsetX;
+    cropStartY = e.offsetY;
+  }
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  if (isCropping) {
+    cropWidth = e.offsetX - cropStartX;
+    cropHeight = e.offsetY - cropStartY;
+    redrawCropArea();
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  if (isCropping) {
+    cropImage();
+  }
+});
+
+// Draw the cropping area rectangle
+function redrawCropArea() {
+  ctx.putImageData(originalImageData, 0, 0); // Redraw the image
+  ctx.strokeStyle = '#ff0000'; // Crop area outline color
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 6]); // Dotted line for the cropping area
+  ctx.strokeRect(cropStartX, cropStartY, cropWidth, cropHeight);
+}
+
+// Crop the image based on the selected area
+function cropImage() {
+  const croppedImageData = ctx.getImageData(cropStartX, cropStartY, cropWidth, cropHeight);
+  const croppedCanvas = document.createElement('canvas');
+  const croppedCtx = croppedCanvas.getContext('2d');
+
+  croppedCanvas.width = cropWidth;
+  croppedCanvas.height = cropHeight;
+  croppedCtx.putImageData(croppedImageData, 0, 0);
+
+  // Clear the current canvas and draw the cropped image
+  canvas.width = cropWidth;
+  canvas.height = cropHeight;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(croppedCanvas, 0, 0);
+}
+
+// Function to enable cropping mode
+function enableCropping() {
+  isCropping = true;
+  canvas.style.cursor = 'crosshair';
+}
+
+// Function to disable cropping mode
+function disableCropping() {
+  isCropping = false;
+  canvas.style.cursor = 'default';
+}
+// Enable cropping mode
+function enableCropping() {
+  isCropping = true;
+  canvas.classList.add('cropping');
+  canvas.style.cursor = 'crosshair';
+}
+
+// Disable cropping mode
+function disableCropping() {
+  isCropping = false;
+  canvas.classList.remove('cropping');
+  canvas.style.cursor = 'default';
+}
+
+  </script>
+</body>
+</html>

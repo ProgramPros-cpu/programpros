@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- CodeMirror Styles & Scripts -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/theme/dracula.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/edit/closetag.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/edit/closebrackets.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>personal webapp</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+       <!-- Tabs Navigation with Logo on Right -->
+<!-- Tabs Navigation -->
+<nav>
+    <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#introduction">Tutorial</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="hamburger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+    
+    <!-- Add these inside your sidebar <ul> -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img src="logo.png" alt="ProgramPros Logo">
+            </div>
+            <ul>
+                <li><a href="https://www.youtube.com/@ProgramPros-fs4ss" target="_blank"><i class="fab fa-youtube"></i> YouTube Channel</a></li>
+                <li><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact Me</a></li>
+                <!-- Add Dark/Light Mode Buttons -->
+                <li><button id="dark-mode-btn"><i class="fas fa-moon"></i> Dark Mode</button></li>
+                <li><button id="light-mode-btn"><i class="fas fa-sun"></i> Light Mode</button></li>
+            </ul>
+        </div>
+    <!-- Blurred Container -->
+        <section id="home" class="tab-content active">
+            <h1>I am that website Joy Kumbhakar built, still surviving on coffee and code!"</h1>
+            <p>This is the home section. Navigate through the tabs to learn more about me!</p>
+        
+            <!-- Article Section -->
+            <h2>About Me</h2>
+            <P12> নমস্কার আমি জয় কুম্ভকার এক প্রোগ্রামার, চলচিত্র সম্পাদক, ছবি সম্পাদক এবং এক চলচিত্রকার। এটা আমার Personal Website আপনার কোন কিছু প্রয়োজন পরলে আমাকে contact করতে পারেন | </P12>
+            <div class="article">
+                <h3>A Vlogger and a Programmer</h3>
+                <p> I am a passionate vlogger and skilled programmer, blending creativity with technology. 
+                    Through my vlogs, I capture engaging stories and experiences, while my programming 
+                    expertise allows me to build innovative solutions. Whether I'm coding the next big 
+                    project or sharing insights through my videos, I bring a unique perspective to both fields.</p>
+            </div>
+        
+            <!-- Important Lines -->
+<h2>Important Things to Remember</h2>
+
+<div class="famous-lines">
+    <p>"A person who never made a mistake never tried anything new."<br>
+        - Albert Einstein
+    </p>
+    <img src="einstein-image.png" alt="Einstein" class="round-image">
+</div>
+
+<div class="famous-lines">
+    <p>"Don't limit a child to your own learning, for he was born in another time."<br>
+        - Rabindranath Tagore
+    </p>
+    <img src="Rabindra Nath Tagore.jpg" alt="Rabindra Nath" class="Rabindra-image">
+</div>
+            <details>
+                <summary>
+                    Useful Websites
+                </summary>
+                <details>
+                    <summary>
+                        Useful Website for Programmers
+                    </summary>
+                    <div class="useful-links">
+                        <h2>Useful Websites</h2>
+                        <ul>
+                            <li><a href="https://www.google.com" target="_blank">Google</a></li>
+                            <li><a href="https://www.github.com" target="_blank">GitHub</a></li>
+                            <li><a href="https://www.stackoverflow.com" target="_blank">Stack Overflow</a></li>
+                            <li><a href="https://www.wikipedia.org" target="_blank">Wikipedia</a></li>
+                        </ul>
+                    </div>
+                </details>
+                <details>
+                    <summary>
+                        Useful Website for Everyone
+                    </summary>
+                    <div class="useful-links">
+                        <h2>Useful Websites</h2>
+                        <ul>
+                            <li><a href="https://www.pixelcut.ai/home" target="_blank">Pixelcut</a></li>
+                            <li><a href="https://ssyoutube.com/en789Jb/" target="_blank">Video Downloader</a></li>
+                            <li><a href="https://www.chatgpt.com" target="_blank">Chat GPT</a></li>
+                        </ul>
+                    </div>
+                </details>
+            </details>
+            <h1>Check out my Instagram!</h1>
+            <p>Follow me on Instagram for more updates:</p>
+            
+            <!-- Instagram link with Font Awesome icon -->
+            <a class="instagram-link" href="https://www.instagram.com/bengalianimo?igsh=MXBydmhibWJ2bXc2dQ==" target="_blank">
+                <i class="fab fa-instagram"></i> Follow me on Instagram
+            </a>
+        </section>
+        <section id="introduction" class="tab-content">
+            <h1>About Me</h1>
+            <p>Hi, I'm Joy Kumbhakar,a Programmer, Editor & Graphics Designer specializing in Coding, Video Editing & Photo Editing. I love creating innovative solutions and exploring new technologies.</p>
+            
+<details>
+    <summary>
+        Tutorial Videos
+    </summary>
+    <details>
+        <summary>
+            <p1>HTML5 Explanation
+            </p1>
+        </summary>
+               <!-- Embedded YouTube Videos -->
+               <div class="video-container">
+                   <iframe width="560" height="315" 
+                       src="https://www.youtube.com/embed/7ylhVxiHdnE" 
+                       title="HTML5 Explanation" 
+                       frameborder="0" 
+                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                       allowfullscreen>
+                   </iframe>           
+               </div>
+    </details>
+    <details>
+        <summary>
+            CSS Explanation
+        </summary>
+        <!-- Embedded YouTube Video -->
+    <div class="video-container">
+        <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/7B1FVQRCv2c" 
+            title="YouTube Video" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>            
+    </div>
+    </details>
+    <details>
+        <summary>
+            JavaScript Explanation
+        </summary>
+        <!-- Embedded YouTube Video -->
+    <div class="video-container">
+        <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/7B1FVQRCv2c" 
+            title="YouTube Video" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>            
+    </div>
+    </details>
+    <details>
+        <summary>
+            Python Explanation
+        </summary>
+        <!-- Embedded YouTube Video -->
+    <div class="video-container">
+        <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/EpE_ZP15Sr4" 
+            title="YouTube Video" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>            
+    </div>
+    </details>
+</details>
+<details>
+    <summary>
+        Notes
+    </summary>
+    <details>
+        <summary>
+            HTML5
+        </summary>
+        <div class="project">
+        <a href="Html5.html">HTML5 NOTES</a>
+        </div>
+    </details>
+    <details>
+        <summary>
+            CSS
+        </summary>
+        
+    </details>
+    <details>
+        <summary>
+            JavaScript
+        </summary>
+        
+    </details>
+    <details>
+        <summary>
+            Python
+        </summary>
+        
+    </details>
+</details>
+<h2>Try Coding Here</h2>
+<div class="editor-container">
+    <textarea id="code-editor">// Write your HTML, CSS, or JavaScript here...</textarea>
+    <button onclick="runCode()">Run Code</button>
+    <button onclick="saveAsHTML()">Save as .html</button>
+</div>
+
+<!-- Output Display -->
+<h3>Output:</h3>
+<iframe id="output-frame"></iframe>
+
+        </section>
+
+        <section id="projects" class="tab-content">
+            <h1>My Projects</h1>
+            
+            <!-- EMI Calculator -->
+            <div class="project">
+                <h3>EMI Calculator</h3>
+                <div class="calculator">
+                    <label for="principal">Loan Amount (₹):</label>
+                    <input type="number" id="principal" placeholder="Enter loan amount">
+                    <label for="rate">Interest Rate (%):</label>
+                    <input type="number" id="rate" placeholder="Enter interest rate">
+                    <label for="time">Loan Tenure (Years):</label>
+                    <input type="number" id="time" placeholder="Enter tenure">
+                    <button onclick="calculateEMI()">Calculate EMI</button>
+                    <p id="emi-result"></p>
+                </div>
+            </div>
+
+            <!-- Calculator -->
+            <div class="project">
+                <h3>Calculator</h3>
+                <div class="calculator">
+                    <input type="text" id="calc-input" placeholder="Enter expression" readonly>
+                    <div class="calc-buttons">
+                        <button onclick="appendToInput('7')">7</button>
+                        <button onclick="appendToInput('8')">8</button>
+                        <button onclick="appendToInput('9')">9</button>
+                        <button onclick="appendToInput('/')">/</button>
+                        <button onclick="appendToInput('4')">4</button>
+                        <button onclick="appendToInput('5')">5</button>
+                        <button onclick="appendToInput('6')">6</button>
+                        <button onclick="appendToInput('*')">*</button>
+                        <button onclick="appendToInput('1')">1</button>
+                        <button onclick="appendToInput('2')">2</button>
+                        <button onclick="appendToInput('3')">3</button>
+                        <button onclick="appendToInput('-')">-</button>
+                        <button onclick="appendToInput('0')">0</button>
+                        <button onclick="appendToInput('.')">.</button>
+                        <button onclick="calculateResult()">=</button>
+                        <button onclick="appendToInput('+')">+</button>
+                        <button onclick="clearInput()">C</button>
+                    </div>
+                    <p id="calc-result"></p>
+                </div>
+            </div>
+
+            <!-- Drawing Board -->
+            <div class="project">
+                <h3>Drawing Board</h3>
+                <canvas id="drawing-board" width="500" height="500"></canvas>
+                <button onclick="clearCanvas()">Clear</button>
+            </div>
+            <details>
+                <summary>Editors</summary>
+            <!-- New File Links Section -->
+    <div class="project">
+        <a href="Front Page maker.html">Front Page maker</a>
+    </div>
+    <!-- New File Links Section -->
+    <div class="project">
+        <a href="Joy's Simple Editor.html">Photo Editor</a>
+    </div>
+</details>
+    <details>
+        <summary>
+            <p1>2D Games
+            </p1>
+        </summary>
+         <!-- New File Links Section -->
+        <div class="project">
+            <a href="Hardest 2D Game ever.html">Red Dot</a>
+        </div>
+         <!-- New File Links Section -->
+        <div class="project">
+            <a href="Tic-tac-toe Game by Joy.html">Tic-Tac-Toe</a>
+        </div>
+    </details>
+        </section>
+
+        <section id="contact" class="tab-content">
+            <h1>Contact Me</h1>
+            <form id="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+        
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+        
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+        
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
+        
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+        
+                <button type="submit">Send</button>
+            </form>
+        </section>
+        
+
+    <!-- Footer -->
+    <footer>
+        <p10>&copy; 2023 ProgramPros. All rights reserved.</p10>
+        <p11><a href="#terms">Terms and Conditions</a> | <a href="#privacy">Privacy Policy</a></p11>
+    </footer>
+
+    <!-- JavaScript for Tabs and Calculators -->
+    <script src="script.js"></script>
+</body>
+</html>

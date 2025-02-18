@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMR Sheet</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #e0f7fa;
+            margin: 0;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+        }
+        .question {
+            margin: 20px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #eceff1;
+        }
+        .question:last-child {
+            border-bottom: none;
+        }
+        .question span {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            color: #546e7a;
+        }
+        .option {
+            display: inline-block;
+            margin: 5px 10px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            user-select: none;
+            border: 1px solid #ccc;
+        }
+        .option:hover {
+            background-color: #eceff1;
+        }
+        .option.correct {
+            background-color: #81c784;
+            color: #ffffff;
+        }
+        .option.incorrect {
+            background-color: #e57373;
+            color: #ffffff;
+        }
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .question-text {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .submit-button {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #004d40;
+        }
+        .results {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Law Test 2024 1st Semester (OMR Sheet Test)</h1>
+        <div id="omr-sheet"></div>
+        <button class="submit-button" onclick="calculateResults()">Submit</button>
+        <div id="results" class="results"></div>
+    </div>
+    <script>
+        const questions = [
+          {
+                "question": "চুক্তির বৈধতার জন্য কোনটি প্রয়োজনীয় নয়?",
+                "options": [
+                    "প্রস্তাব",
+                    "গ্রহণ",
+                    "বিবাহ",
+                    "আইনগত ক্ষমতা"
+                ],
+                "correctAnswer": 2
+            },
+            {
+                "question": "‘অফার’ বলতে কোনটি বোঝায়?",
+                "options": [
+                    "প্রস্তাব",
+                    "চুক্তি",
+                    "আবেদন",
+                    "প্রতিশ্রুতি"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "ভোক্তা সুরক্ষা আইন কবে চালু হয়েছিল?",
+                "options": [
+                    "১৯৮৬",
+                    "১৯৯১",
+                    "১৯৯৫",
+                    "২০০০"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "পার্টনারশিপ অ্যাক্টে অংশীদারিত্ব কিসের জন্য ব্যবহৃত হয়?",
+                "options": [
+                    "ভোক্তাদের সুরক্ষা",
+                    "কোম্পানির পরিচালনা",
+                    "ব্যবসার অংশীদারিত্ব",
+                    "পণ্যের বিক্রয়"
+                ],
+                "correctAnswer": 2
+            },
+            {
+                "question": "কোন আইনের অধীনে চুক্তি না মানলে কী করা যেতে পারে?",
+                "options": [
+                    "ক্রিমিনাল মামলা",
+                    "ভোক্তা সুরক্ষা মামলা",
+                    "সিভিল মামলা",
+                    "পারিবারিক মামলা"
+                ],
+                "correctAnswer": 2
+            },
+            {
+                "question": "‘গ্যারান্টি’ এবং ‘ওয়ারেন্টি’র মধ্যে পার্থক্য কী?",
+                "options": [
+                    "গ্যারান্টি ক্রেতার সুবিধা, ওয়ারেন্টি বিক্রেতার সুবিধা",
+                    "গ্যারান্টি দীর্ঘমেয়াদী, ওয়ারেন্টি স্বল্পমেয়াদী",
+                    "গ্যারান্টি সাময়িক, ওয়ারেন্টি স্থায়ী",
+                    "কোন পার্থক্য নেই"
+                ],
+                "correctAnswer": 1
+            },
+            {
+                "question": "চুক্তির সময়সীমা কত হতে পারে?",
+                "options": [
+                    "সীমাহীন",
+                    "এক বছর",
+                    "দুই বছর",
+                    "পাঁচ বছর"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "কোন আইনের অধীনে অংশীদারিত্বের ক্ষেত্রে লাভ এবং ক্ষতির ভাগ উল্লেখ করা হয়েছে?",
+                "options": [
+                    "কোম্পানি আইন",
+                    "চুক্তি আইন",
+                    "অংশীদারিত্ব আইন",
+                    "ভোক্তা সুরক্ষা আইন"
+                ],
+                "correctAnswer": 2
+            },
+            {
+                "question": "কোন আইনের অধীনে ‘অফার’ এর বৈধতা নির্ধারিত হয়?",
+                "options": [
+                    "সেলস অফ গুডস অ্যাক্ট",
+                    "পার্টনারশিপ অ্যাক্ট",
+                    "ইন্ডিয়ান কন্ট্র্যাক্ট অ্যাক্ট",
+                    "ভোক্তা সুরক্ষা আইন"
+                ],
+                "correctAnswer": 2
+            },
+            {
+                "question": "কোন ধরনের চুক্তি ‘অবৈধ’ হিসেবে বিবেচিত হবে?",
+                "options": [
+                    "সরকারি চুক্তি",
+                    "সাদৃশ্য চুক্তি",
+                    "অস্বচ্ছল চুক্তি",
+                    "প্রতারণামূলক চুক্তি"
+                ],
+                "correctAnswer": 3
+            },
+            {
+                "question": "কোন আইনের অধীনে ভোক্তা অধিকার সংরক্ষিত হয়?",
+                "options": [
+                    "অংশীদারিত্ব আইন",
+                    "সেলস অফ গুডস অ্যাক্ট",
+                    "কনসিউমার প্রোটেকশন অ্যাক্ট",
+                    "কোম্পানি আইন"
+                ],
+                "correctAnswer": 2
+            },
+            {
+                "question": "একটি কোম্পানির ফান্ড ব্যবস্থাপনার জন্য কোন আইনের অধীনে নিয়ম আছে?",
+                "options": [
+                    "পার্টনারশিপ অ্যাক্ট",
+                    "কোম্পানি আইন",
+                    "সেলস অফ গুডস অ্যাক্ট",
+                    "ভোক্তা সুরক্ষা আইন"
+                ],
+                "correctAnswer": 1
+            },
+            {
+                "question": "‘পণ্যের বিক্রয়’ কি?",
+                "options": [
+                    "আইন",
+                    "চুক্তি",
+                    "অঙ্গীকার",
+                    "চুক্তির লঙ্ঘন"
+                ],
+                "correctAnswer": 1
+            },
+            {
+                "question": "‘মৌখিক চুক্তি’ সম্পর্কে কি বলা হয়?",
+                "options": [
+                    "বৈধ",
+                    "অবৈধ",
+                    "অকার্যকর",
+                    "ঐচ্ছিক"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "‘প্রস্তাব’ এর বৈধতার জন্য প্রয়োজনীয় শর্ত কোনটি?",
+                "options": [
+                    "প্রতারণা",
+                    "চুক্তি",
+                    "ফ্রড",
+                    "প্রস্তাবের পরিষ্কারতা"
+                ],
+                "correctAnswer": 3
+            },
+            {
+                "question": "‘চুক্তির পরিপক্বতা’ কিভাবে নির্ধারিত হয়?",
+                "options": [
+                    "আইনের দ্বারা",
+                    "প্রস্তাবক দ্বারা",
+                    "প্রাপ্তকারী দ্বারা",
+                    "অংশীদারিত্বের দ্বারা"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "কোন আইনের অধীনে অংশীদারিত্ব প্রতিষ্ঠা করা হয়?",
+                "options": [
+                    "সেলস অফ গুডস অ্যাক্ট",
+                    "ইন্ডিয়ান কন্ট্র্যাক্ট অ্যাক্ট",
+                    "পার্টনারশিপ অ্যাক্ট",
+                    "কোম্পানি আইন"
+                ],
+                "correctAnswer": 2
+            },
+            {
+                "question": "‘চুক্তির লঙ্ঘন’ ক্ষেত্রে কোন প্রকার মামলা হয়?",
+                "options": [
+                    "ক্রিমিনাল মামলা",
+                    "সিভিল মামলা",
+                    "পারিবারিক মামলা",
+                    "সম্পত্তি মামলা"
+                ],
+                "correctAnswer": 1
+            },
+            {
+                "question": "কোন আইনের অধীনে পণ্য সম্পর্কে তথ্য প্রদান করতে হয়?",
+                "options": [
+                    "ভোক্তা সুরক্ষা আইন",
+                    "পার্টনারশিপ অ্যাক্ট",
+                    "কোম্পানি আইন",
+                    "সেলস অফ গুডস অ্যাক্ট"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "‘পণ্যের মেয়াদ’ সম্পর্কিত বিধান কোন আইনে রয়েছে?",
+                "options": [
+                    "ভোক্তা সুরক্ষা আইন",
+                    "কোম্পানি আইন",
+                    "পার্টনারশিপ অ্যাক্ট",
+                    "সেলস অফ গুডস অ্যাক্ট"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "ভোক্তা সুরক্ষা আইনে কোন কমিশন আছে?",
+                "options": [
+                    "জাতীয়",
+                    "রাজ্য",
+                    "জেলা",
+                    "উপরোক্ত সব"
+                ],
+                "correctAnswer": 3
+            },
+            {
+                "question": "পণ্য বিক্রয়ের ক্ষেত্রে ‘ফ্রড’ বলতে কোনটি বোঝায়?",
+                "options": [
+                    "মিথ্যা প্রতিশ্রুতি",
+                    "দু’পক্ষের চুক্তি",
+                    "বিক্রেতার অনুপস্থিতি",
+                    "উল্লেখযোগ্য তথ্যের অভাব"
+                ],
+                "correctAnswer": 0
+            },
+            {
+                "question": "মৌখিক চুক্তির বৈধতা কি সব পরিস্থিতিতে সমান?",
+                "options": [
+                    "হ্যাঁ, সব ক্ষেত্রে",
+                    "না, কিছু ক্ষেত্রে বৈধ নয়",
+                    "মৌখিক চুক্তি বৈধ নয়",
+                    "সুধারণ করে নির্ধারিত হয়"
+                ],
+                "correctAnswer": 1
+            },
+            {
+                "question": "‘সেলস অফ গুডস অ্যাক্ট’-এ পণ্যের গ্যারান্টি সম্পর্কে কোন ধারা উল্লেখিত?",
+                "options": [
+                    "ধারা ১২",
+                    "ধারা ১৫",
+                    "ধারা ১৬",
+                    "ধারা ২০"
+                ],
+                "correctAnswer": 1
+            },
+            {
+                "question": "পণ্যের বিক্রয়ের ক্ষেত্রে কোন চুক্তির মৌলিক বৈশিষ্ট্য?",
+                "options": [
+                    "বিষয়বস্তু",
+                    "মূল্য",
+                    "প্রত্যাহার",
+                    "আগ্রহ"
+                ],
+                "correctAnswer": 1
+            },
+            {
+                "question": "পণ্যের ‘ফ্রড’ কিভাবে নির্ধারিত হয়?",
+                "options": [
+                    "কোম্পানির দ্বারা",
+                    "ক্রেতার দ্বারা",
+                    "বিক্রেতার দ্বারা",
+                    "আইনের দ্বারা"
+                ],
+                "correctAnswer": 3
+            }
+        ];
+
+        const omrSheetElement = document.getElementById('omr-sheet');
+        const resultsElement = document.getElementById('results');
+
+        let userAnswers = new Array(questions.length).fill(null);
+
+        function displayQuestions() {
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                const questionText = document.createElement('span');
+                questionText.className = 'question-text';
+                questionText.innerText = `${index + 1}. ${q.question}`;
+                
+                questionDiv.appendChild(questionText);
+                
+                q.options.forEach((option, i) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    optionDiv.innerText = option;
+                    optionDiv.dataset.questionIndex = index;
+                    optionDiv.dataset.optionIndex = i;
+                    optionDiv.addEventListener('click', () => handleOptionClick(optionDiv, index, i));
+                    
+                    questionDiv.appendChild(optionDiv);
+                });
+                
+                omrSheetElement.appendChild(questionDiv);
+            });
+        }
+
+        function handleOptionClick(optionDiv, questionIndex, optionIndex) {
+            const allOptions = optionDiv.parentElement.querySelectorAll('.option');
+            allOptions.forEach(opt => opt.classList.add('disabled'));
+            
+            userAnswers[questionIndex] = optionIndex;
+
+            if (optionIndex === questions[questionIndex].correctAnswer) {
+                optionDiv.classList.add('correct');
+            } else {
+                optionDiv.classList.add('incorrect');
+                allOptions[questions[questionIndex].correctAnswer].classList.add('correct');
+            }
+        }
+
+        function calculateResults() {
+            let totalMarks = 0;
+            let totalQuestions = questions.length;
+            
+            questions.forEach((q, index) => {
+                if (userAnswers[index] === q.correctAnswer) {
+                    totalMarks++;
+                }
+            });
+
+            const percentage = (totalMarks / totalQuestions) * 100;
+            let grade;
+            if (percentage >= 90) {
+                grade = 'A';
+            } else if (percentage >= 80) {
+                grade = 'B';
+            } else if (percentage >= 70) {
+                grade = 'C';
+            } else if (percentage >= 60) {
+                grade = 'D';
+            } else {
+                grade = 'F';
+            }
+
+            resultsElement.innerHTML = `
+                <p>Total Marks: ${totalMarks}/${totalQuestions}</p>
+                <p>Percentage: ${percentage.toFixed(2)}%</p>
+                <p>Grade: ${grade}</p>
+            `;
+        }
+
+        displayQuestions();
+    </script>
+</body>
+</html>

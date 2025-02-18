@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    color: #007bff;
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #9191fac9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    font-size: 24px;
+    color: #051364fa;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+#imagePreview img {
+    max-width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}</style>
+                </head>
+                <body>
+                    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Submission</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>2024-25 Year Project</h1>
+        <form id="uploadForm">
+            <div class="form-group">
+                <label for="projectName">Project Name</label>
+                <input type="text" id="projectName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="imageUpload">Upload Image of Your School</label>
+                <input type="file" id="imageUpload" class="form-control" accept="image/*" required>
+                <div id="imagePreview"></div>
+            </div>
+            <div class="form-group">
+                <label for="studentName">Name of the Student</label>
+                <input type="text" id="studentName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="rollNo">Roll No.</label>
+                <select id="rollNo" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label for="className">Class</label>
+                <select id="className" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label for="section">Section</label>
+                <select id="section" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label for="subjectName">Subject Name</label>
+                <select id="subjectName" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label for="schoolName">School Name</label>
+                <input type="text" id="schoolName" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" id="savePdfBtn" class="btn btn-success">Save as PDF</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html></meta></link></input>
+                    <script>document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Select2 for dropdowns
+    $('#rollNo').select2();
+    $('#className').select2();
+    $('#section').select2();
+    $('#subjectName').select2();
+
+    // Populate the Roll No. dropdown
+    for (let i = 1; i <= 1000; i++) {
+        $('#rollNo').append(new Option(i, i));
+    }
+
+    // Populate the Class dropdown with Roman numerals
+    const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+    romanNumerals.forEach(num => {
+        $('#className').append(new Option(num, num));
+    });
+
+    // Populate the Section dropdown
+    for (let i = 65; i <= 90; i++) { // A to Z
+        $('#section').append(new Option(String.fromCharCode(i), String.fromCharCode(i)));
+    }
+    for (let i = 65; i <= 90; i++) { // A1 to Z1
+        $('#section').append(new Option(String.fromCharCode(i) + '1', String.fromCharCode(i) + '1'));
+    }
+
+    // Populate the Subjects dropdown with Indian education system subjects
+    const subjects = [
+        '1st Language (Bengali)', '1st Language (English)', '2nd Language (Bengali)', '2nd Language (English)',
+        'Life Science', 'Biology', 'Physical Science', 'Education', 'Sanskrit', 'Geography', 'History',
+        'Accountancy', 'Business Studies', 'Commercian Law & Auditing', 'Cost & Taxation', 'Computer Science',
+        'Economics', 'Macroeconomics', 'Microeconomics', 'Mathematics', 'Science', 'English', 'Hindi', 'Sanskrit',
+        'Social Science', 'Physics', 'Chemistry', 'Biology', 'History', 'Geography', 'Political Science',
+        'Psychology', 'Sociology', 'Physical Education', 'Art Education', 'Music', 'Home Science',
+        'Environmental Science', 'Engineering Graphics', 'Entrepreneurship', 'Agriculture', 'Hotel Management',
+        'Retail Management'
+    ];
+
+    subjects.forEach(subject => {
+        $('#subjectName').append(new Option(subject, subject));
+    });
+});
+
+document.getElementById('imageUpload').addEventListener('change', function(event) {
+    const imagePreview = document.getElementById('imagePreview');
+    imagePreview.innerHTML = '';
+
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '100%';
+            img.style.border = '2px solid #ddd';
+            img.style.borderRadius = '10px';
+            img.style.marginTop = '0.5rem';
+            img.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+            imagePreview.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Form submitted!');
+});
+
+document.getElementById('savePdfBtn').addEventListener('click', function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({
+        format: 'a4'
+    });
+
+    // Set the background color
+    doc.setFillColor(173, 216, 230); // Light Blue
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), 'F');
+
+    // Load the background image
+    const imgData = '/mnt/data/file-5HyCAw3fSxjkgGDBuBCjVGZU'; // Replace with the actual path to your background image
+    const projectName = document.getElementById('projectName').value;
+    const studentName = document.getElementById('studentName').value;
+    const rollNo = document.getElementById('rollNo').value;
+    const className = document.getElementById('className').value;
+    const section = document.getElementById('section').value;
+    const subjectName = document.getElementById('subjectName').value;
+    const schoolName = document.getElementById('schoolName').value;
+
+    // Add the title
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.text('2024-25 Year Project', doc.internal.pageSize.getWidth() / 2, 20, null, null, 'center');
+
+    // Add the image
+    const imgElement = document.querySelector('#imagePreview img');
+    if (imgElement) {
+        const imgWidth = 120;
+        const imgHeight = (imgElement.naturalHeight / imgElement.naturalWidth) * imgWidth;
+        doc.addImage(imgElement.src, 'JPEG', (doc.internal.pageSize.getWidth() - imgWidth) / 2, 30, imgWidth, imgHeight);
+    }
+
+    // Add the project name
+    doc.setFontSize(18);
+    doc.setTextColor(66, 33, 11); // Brown color for text
+    doc.text(projectName, doc.internal.pageSize.getWidth() / 2, 90, null, null, 'center');
+    doc.setDrawColor(66, 33, 11); // Brown color for underline
+    doc.line(doc.internal.pageSize.getWidth() / 2 - (doc.getStringUnitWidth(projectName) * 5), 92, doc.internal.pageSize.getWidth() / 2 + (doc.getStringUnitWidth(projectName) * 5), 92);
+
+    // Add the form data
+    const marginLeft = 20;
+    const startY = 110;
+    const lineSpacing = 10;
+    
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0); // Black color for text
+
+    const labels = ['Name of the Student:', 'Roll No.:', 'Class:', 'Section:', 'Subject Name:', 'School Name:'];
+    const values = [studentName, rollNo, className, section, subjectName, schoolName];
+    
+    labels.forEach((label, index) => {
+        doc.setFont("helvetica", "bold");
+        doc.text(label, marginLeft, startY + (index * lineSpacing));
+        doc.setFont("helvetica", "normal");
+        doc.text(values[index], marginLeft + 50, startY + (index * lineSpacing));
+    });
+
+    // Add a border to the page
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(66, 33, 11); // Brown color for border
+    doc.rect(10, 10, doc.internal.pageSize.getWidth() - 20, doc.internal.pageSize.getHeight() - 20);
+
+    doc.save('project_details.pdf');
+});</script>
+                </body>
+                </html>
+            

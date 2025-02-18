@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Tags Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header h1 {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            animation: typewriter 4s steps(40, end) forwards;
+        }
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        nav {
+            background-color: #343a40;
+            color: white;
+            padding: 10px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .code-block {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        details {
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        summary {
+            cursor: pointer;
+            padding: 10px;
+            background: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+        summary:hover {
+            background: #e1e1e1;
+        }
+        details[open] summary {
+            background: #d1d1d1;
+            color: #333;
+        }
+        details p {
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            margin: 0;
+            background: #fafafa;
+        }
+        .bengali {
+            font-size: 1.1em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ProgramPros HTML Explanation</h1>
+    </header>
+    <a href="Main.html">Back</a>
+    <nav>
+        <ul id="nav-menu">
+            <li><a href="#section1">Metadata Tags</a></li>
+            <li><a href="#section2">Content Sectioning</a></li>
+            <li><a href="#section3">Text-Level Semantics</a></li>
+            <li><a href="#section4">Inline Text Semantics</a></li>
+            <li><a href="#section5">Forms</a></li>
+            <li><a href="#section6">Tables</a></li>
+            <li><a href="#section7">Embedded Content</a></li>
+            <li><a href="#section8">Scripting</a></li>
+        </ul>
+    </nav>
+
+    <section id="section1">
+        <h2>Metadata Tags</h2>
+        <p>Metadata tags provide information about the document:</p>
+        <ul>
+            <li><code>&lt;meta&gt;</code> - Defines metadata about an HTML document.</li>
+            <li><code>&lt;title&gt;</code> - Specifies a title for the document.</li>
+            <li><code>&lt;base&gt;</code> - Specifies a base URL for relative URLs.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;meta charset="UTF-8"&gt;<br>
+                &lt;title&gt;Page Title&lt;/title&gt;<br>
+                &lt;base href="https://example.com/"&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;meta charset="UTF-8"&gt;<br>
+                    &lt;title&gt;Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;h1&gt;Hello World!&lt;/h1&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset='UTF-8'>
+                    <title>Example</title>
+                </head>
+                <body>
+                    <h1>Hello World!</h1>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">মেটাডেটা ট্যাগগুলি ডকুমেন্ট সম্পর্কে তথ্য প্রদান করে:</p>
+        <ul class="bengali">
+            <li><code>&lt;meta&gt;</code> - একটি HTML ডকুমেন্ট সম্পর্কে মেটাডেটা সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;title&gt;</code> - ডকুমেন্টের একটি শিরোনাম নির্ধারণ করে।</li>
+            <li><code>&lt;base&gt;</code> - আপেক্ষিক ইউআরএলগুলির জন্য একটি বেস ইউআরএল নির্ধারণ করে।</li>
+        </ul>
+    </section>
+
+    <section id="section2">
+        <h2>Content Sectioning</h2>
+        <p>Content sectioning tags define the structure of the document:</p>
+        <ul>
+            <li><code>&lt;header&gt;</code> - Defines a header for a document or section.</li>
+            <li><code>&lt;nav&gt;</code> - Defines a navigation menu.</li>
+            <li><code>&lt;main&gt;</code> - Specifies the main content of the document.</li>
+            <li><code>&lt;section&gt;</code> - Defines a section in a document.</li>
+            <li><code>&lt;article&gt;</code> - Defines an article.</li>
+            <li><code>&lt;aside&gt;</code> - Defines content aside from the main content.</li>
+            <li><code>&lt;footer&gt;</code> - Defines a footer for a document or section.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;header&gt;Header content&lt;/header&gt;<br>
+                &lt;nav&gt;Navigation links&lt;/nav&gt;<br>
+                &lt;main&gt;Main content&lt;/main&gt;<br>
+                &lt;section&gt;Section content&lt;/section&gt;<br>
+                &lt;article&gt;Article content&lt;/article&gt;<br>
+                &lt;aside&gt;Aside content&lt;/aside&gt;<br>
+                &lt;footer&gt;Footer content&lt;/footer&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Content Sectioning Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;header&gt;Header&lt;/header&gt;<br>
+                    &lt;nav&gt;Navigation&lt;/nav&gt;<br>
+                    &lt;main&gt;Main Content&lt;/main&gt;<br>
+                    &lt;section&gt;Section&lt;/section&gt;<br>
+                    &lt;article&gt;Article&lt;/article&gt;<br>
+                    &lt;aside&gt;Aside&lt;/aside&gt;<br>
+                    &lt;footer&gt;Footer&lt;/footer&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Content Sectioning Example</title>
+                </head>
+                <body>
+                    <header>Header</header>
+                    <nav>Navigation</nav>
+                    <main>Main Content</main>
+                    <section>Section</section>
+                    <article>Article</article>
+                    <aside>Aside</aside>
+                    <footer>Footer</footer>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">কনটেন্ট সেকশনিং ট্যাগগুলি ডকুমেন্টের কাঠামো সংজ্ঞায়িত করে:</p>
+        <ul class="bengali">
+            <li><code>&lt;header&gt;</code> - একটি ডকুমেন্ট বা সেকশনের হেডার সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;nav&gt;</code> - একটি নেভিগেশন মেনু সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;main&gt;</code> - ডকুমেন্টের মূল কনটেন্ট নির্ধারণ করে।</li>
+            <li><code>&lt;section&gt;</code> - একটি ডকুমেন্টে একটি সেকশন সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;article&gt;</code> - একটি আর্টিকেল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;aside&gt;</code> - মূল কনটেন্টের পাশাপাশি কনটেন্ট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;footer&gt;</code> - একটি ডকুমেন্ট বা সেকশনের ফুটার সংজ্ঞায়িত করে।</li>
+        </ul>
+    </section>
+
+    <section id="section3">
+        <h2>Text-Level Semantics</h2>
+        <p>Text-level semantics tags define the structure of text:</p>
+        <ul>
+            <li><code>&lt;h1&gt; to &lt;h6&gt;</code> - Defines HTML headings.</li>
+            <li><code>&lt;p&gt;</code> - Defines a paragraph.</li>
+            <li><code>&lt;br&gt;</code> - Inserts a single line break.</li>
+            <li><code>&lt;hr&gt;</code> - Defines a thematic change in the content.</li>
+            <li><code>&lt;blockquote&gt;</code> - Defines a block of text that is a quotation.</li>
+            <li><code>&lt;pre&gt;</code> - Defines preformatted text.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;h1&gt;Heading 1&lt;/h1&gt;<br>
+                &lt;p&gt;This is a paragraph.&lt;/p&gt;<br>
+                &lt;br&gt;<br>
+                &lt;hr&gt;<br>
+                &lt;blockquote&gt;Blockquote text&lt;/blockquote&gt;<br>
+                &lt;pre&gt;Preformatted text&lt;/pre&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Text-Level Semantics Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;h1&gt;Heading 1&lt;/h1&gt;<br>
+                    &lt;p&gt;This is a paragraph.&lt;/p&gt;<br>
+                    &lt;br&gt;<br>
+                    &lt;hr&gt;<br>
+                    &lt;blockquote&gt;Blockquote text&lt;/blockquote&gt;<br>
+                    &lt;pre&gt;Preformatted text&lt;/pre&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Text-Level Semantics Example</title>
+                </head>
+                <body>
+                    <h1>Heading 1</h1>
+                    <p>This is a paragraph.</p>
+                    <br>
+                    <hr>
+                    <blockquote>Blockquote text</blockquote>
+                    <pre>Preformatted text</pre>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">টেক্সট-লেভেল সেমান্টিক্স ট্যাগগুলি টেক্সটের কাঠামো সংজ্ঞায়িত করে:</p>
+        <ul class="bengali">
+            <li><code>&lt;h1&gt; থেকে &lt;h6&gt;</code> - HTML হেডিংস সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;p&gt;</code> - একটি প্যারাগ্রাফ সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;br&gt;</code> - একটি লাইনের ব্রেক বসায়।</li>
+            <li><code>&lt;hr&gt;</code> - কনটেন্টে একটি থিম্যাটিক পরিবর্তন সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;blockquote&gt;</code> - একটি উদ্ধৃতি হিসাবে ব্লক অব টেক্সট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;pre&gt;</code> - পূর্বনির্ধারিত টেক্সট সংজ্ঞায়িত করে।</li>
+        </ul>
+    </section>
+
+    <section id="section4">
+        <h2>Inline Text Semantics</h2>
+        <p>Inline text semantics tags provide meaning to text:</p>
+        <ul>
+            <li><code>&lt;strong&gt;</code> - Defines important text.</li>
+            <li><code>&lt;em&gt;</code> - Defines emphasized text.</li>
+            <li><code>&lt;mark&gt;</code> - Defines marked or highlighted text.</li>
+            <li><code>&lt;small&gt;</code> - Defines smaller text.</li>
+            <li><code>&lt;del&gt;</code> - Defines deleted text.</li>
+            <li><code>&lt;ins&gt;</code> - Defines inserted text.</li>
+            <li><code>&lt;abbr&gt;</code> - Defines an abbreviation or acronym.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;strong&gt;Strong text&lt;/strong&gt;<br>
+                &lt;em&gt;Emphasized text&lt;/em&gt;<br>
+                &lt;mark&gt;Highlighted text&lt;/mark&gt;<br>
+                &lt;small&gt;Smaller text&lt;/small&gt;<br>
+                &lt;del&gt;Deleted text&lt;/del&gt;<br>
+                &lt;ins&gt;Inserted text&lt;/ins&gt;<br>
+                &lt;abbr title="Hypertext Markup Language"&gt;HTML&lt;/abbr&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Inline Text Semantics Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;strong&gt;Strong text&lt;/strong&gt;<br>
+                    &lt;em&gt;Emphasized text&lt;/em&gt;<br>
+                    &lt;mark&gt;Highlighted text&lt;/mark&gt;<br>
+                    &lt;small&gt;Smaller text&lt;/small&gt;<br>
+                    &lt;del&gt;Deleted text&lt;/del&gt;<br>
+                    &lt;ins&gt;Inserted text&lt;/ins&gt;<br>
+                    &lt;abbr title="Hypertext Markup Language"&gt;HTML&lt;/abbr&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Inline Text Semantics Example</title>
+                </head>
+                <body>
+                    <strong>Strong text</strong>
+                    <em>Emphasized text</em>
+                    <mark>Highlighted text</mark>
+                    <small>Smaller text</small>
+                    <del>Deleted text</del>
+                    <ins>Inserted text</ins>
+                    <abbr title="Hypertext Markup Language">HTML</abbr>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">ইনলাইন টেক্সট সেমান্টিক্স ট্যাগগুলি টেক্সটের অর্থ প্রদান করে:</p>
+        <ul class="bengali">
+            <li><code>&lt;strong&gt;</code> - গুরুত্বপূর্ণ টেক্সট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;em&gt;</code> - জোরালো টেক্সট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;mark&gt;</code> - হাইলাইট করা টেক্সট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;small&gt;</code> - ছোট টেক্সট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;del&gt;</code> - মুছে ফেলা টেক্সট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;ins&gt;</code> - যোগ করা টেক্সট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;abbr&gt;</code> - একটি সংক্ষিপ্ত রূপ বা এক্রনিম সংজ্ঞায়িত করে।</li>
+        </ul>
+    </section>
+
+    <section id="section5">
+        <h2>Forms</h2>
+        <p>Forms tags are used to collect user input:</p>
+        <ul>
+            <li><code>&lt;form&gt;</code> - Defines an HTML form for user input.</li>
+            <li><code>&lt;input&gt;</code> - Defines an input control.</li>
+            <li><code>&lt;textarea&gt;</code> - Defines a multi-line text input control.</li>
+            <li><code>&lt;button&gt;</code> - Defines a clickable button.</li>
+            <li><code>&lt;select&gt;</code> - Defines a dropdown list.</li>
+            <li><code>&lt;option&gt;</code> - Defines options in a dropdown list.</li>
+            <li><code>&lt;label&gt;</code> - Defines a label for an <code>&lt;input&gt;</code> element.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;form action="/submit" method="post"&gt;<br>
+                &lt;label for="name"&gt;Name:&lt;/label&gt;<br>
+                &lt;input type="text" id="name" name="name"&gt;<br>
+                &lt;label for="message"&gt;Message:&lt;/label&gt;<br>
+                &lt;textarea id="message" name="message"&gt;&lt;/textarea&gt;<br>
+                &lt;button type="submit"&gt;Submit&lt;/button&gt;<br>
+                &lt;/form&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Forms Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;form action="/submit" method="post"&gt;<br>
+                    &lt;label for="name"&gt;Name:&lt;/label&gt;<br>
+                    &lt;input type="text" id="name" name="name"&gt;<br>
+                    &lt;label for="message"&gt;Message:&lt;/label&gt;<br>
+                    &lt;textarea id="message" name="message"&gt;&lt;/textarea&gt;<br>
+                    &lt;button type="submit"&gt;Submit&lt;/button&gt;<br>
+                    &lt;/form&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Forms Example</title>
+                </head>
+                <body>
+                    <form action='/submit' method='post'>
+                        <label for='name'>Name:</label>
+                        <input type='text' id='name' name='name'>
+                        <label for='message'>Message:</label>
+                        <textarea id='message' name='message'></textarea>
+                        <button type='submit'>Submit</button>
+                    </form>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">ফর্ম ট্যাগগুলি ব্যবহারকারীর ইনপুট সংগ্রহ করতে ব্যবহৃত হয়:</p>
+        <ul class="bengali">
+            <li><code>&lt;form&gt;</code> - ব্যবহারকারীর ইনপুটের জন্য একটি HTML ফর্ম সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;input&gt;</code> - একটি ইনপুট কন্ট্রোল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;textarea&gt;</code> - একাধিক লাইন টেক্সট ইনপুট কন্ট্রোল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;button&gt;</code> - একটি ক্লিকযোগ্য বোতাম সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;select&gt;</code> - একটি ড্রপডাউন তালিকা সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;option&gt;</code> - একটি ড্রপডাউন তালিকায় বিকল্প সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;label&gt;</code> - একটি <code>&lt;input&gt;</code> উপাদানের জন্য একটি লেবেল সংজ্ঞায়িত করে।</li>
+        </ul>
+    </section>
+
+    <section id="section6">
+        <h2>Tables</h2>
+        <p>Tables tags are used to display tabular data:</p>
+        <ul>
+            <li><code>&lt;table&gt;</code> - Defines a table.</li>
+            <li><code>&lt;tr&gt;</code> - Defines a row in a table.</li>
+            <li><code>&lt;td&gt;</code> - Defines a cell in a table.</li>
+            <li><code>&lt;th&gt;</code> - Defines a header cell in a table.</li>
+            <li><code>&lt;thead&gt;</code> - Groups header content in a table.</li>
+            <li><code>&lt;tbody&gt;</code> - Groups body content in a table.</li>
+            <li><code>&lt;tfoot&gt;</code> - Groups footer content in a table.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;table&gt;<br>
+                &lt;thead&gt;<br>
+                &lt;tr&gt;<br>
+                &lt;th&gt;Header 1&lt;/th&gt;<br>
+                &lt;th&gt;Header 2&lt;/th&gt;<br>
+                &lt;/tr&gt;<br>
+                &lt;/thead&gt;<br>
+                &lt;tbody&gt;<br>
+                &lt;tr&gt;<br>
+                &lt;td&gt;Cell 1&lt;/td&gt;<br>
+                &lt;td&gt;Cell 2&lt;/td&gt;<br>
+                &lt;/tr&gt;<br>
+                &lt;/tbody&gt;<br>
+                &lt;tfoot&gt;<br>
+                &lt;tr&gt;<br>
+                &lt;td colspan="2"&gt;Footer&lt;/td&gt;<br>
+                &lt;/tr&gt;<br>
+                &lt;/tfoot&gt;<br>
+                &lt;/table&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Tables Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;table&gt;<br>
+                    &lt;thead&gt;<br>
+                    &lt;tr&gt;<br>
+                    &lt;th&gt;Header 1&lt;/th&gt;<br>
+                    &lt;th&gt;Header 2&lt;/th&gt;<br>
+                    &lt;/tr&gt;<br>
+                    &lt;/thead&gt;<br>
+                   &lt;/tbody&gt;<br>
+                    &lt;tfoot&gt;<br>
+                    &lt;tr&gt;<br>
+                    &lt;td colspan="2"&gt;Footer&lt;/td&gt;<br>
+                    &lt;/tr&gt;<br>
+                    &lt;/tfoot&gt;<br>
+                    &lt;/table&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Tables Example</title>
+                </head>
+                <body>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Header 1</th>
+                                <th>Header 2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cell 1</td>
+                                <td>Cell 2</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan='2'>Footer</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">টেবিল ট্যাগগুলি টেবুলার ডেটা প্রদর্শন করতে ব্যবহৃত হয়:</p>
+        <ul class="bengali">
+            <li><code>&lt;table&gt;</code> - একটি টেবিল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;tr&gt;</code> - একটি টেবিলে একটি রো সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;td&gt;</code> - একটি টেবিলে একটি সেল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;th&gt;</code> - একটি টেবিলে একটি হেডার সেল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;thead&gt;</code> - একটি টেবিলের হেডার কনটেন্ট গ্রুপ করে।</li>
+            <li><code>&lt;tbody&gt;</code> - একটি টেবিলের বডি কনটেন্ট গ্রুপ করে।</li>
+            <li><code>&lt;tfoot&gt;</code> - একটি টেবিলের ফুটার কনটেন্ট গ্রুপ করে।</li>
+            <li><code>&lt;textarea&gt;</code> - একাধিক লাইন টেক্সট ইনপুট কন্ট্রোল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;button&gt;</code> - একটি ক্লিকযোগ্য বোতাম সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;select&gt;</code> - একটি ড্রপডাউন তালিকা সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;option&gt;</code> - একটি ড্রপডাউন তালিকায় বিকল্প সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;label&gt;</code> - একটি <code>&lt;input&gt;</code> উপাদানের জন্য লেবেল সংজ্ঞায়িত করে।</li>
+        </ul>
+    </section>
+
+    <section id="section6">
+        <h2>Tables</h2>
+        <p>Tables tags are used to create tables:</p>
+        <ul>
+            <li><code>&lt;table&gt;</code> - Defines a table.</li>
+            <li><code>&lt;tr&gt;</code> - Defines a row in a table.</li>
+            <li><code>&lt;th&gt;</code> - Defines a header cell in a table.</li>
+            <li><code>&lt;td&gt;</code> - Defines a cell in a table.</li>
+            <li><code>&lt;caption&gt;</code> - Defines a table caption.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;table&gt;<br>
+                &lt;caption&gt;Table Caption&lt;/caption&gt;<br>
+                &lt;tr&gt;<br>
+                &lt;th&gt;Header 1&lt;/th&gt;<br>
+                &lt;th&gt;Header 2&lt;/th&gt;<br>
+                &lt;/tr&gt;<br>
+                &lt;tr&gt;<br>
+                &lt;td&gt;Data 1&lt;/td&gt;<br>
+                &lt;td&gt;Data 2&lt;/td&gt;<br>
+                &lt;/tr&gt;<br>
+                &lt;/table&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Tables Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;table&gt;<br>
+                    &lt;caption&gt;Table Caption&lt;/caption&gt;<br>
+                    &lt;tr&gt;<br>
+                    &lt;th&gt;Header 1&lt;/th&gt;<br>
+                    &lt;th&gt;Header 2&lt;/th&gt;<br>
+                    &lt;/tr&gt;<br>
+                    &lt;tr&gt;<br>
+                    &lt;td&gt;Data 1&lt;/td&gt;<br>
+                    &lt;td&gt;Data 2&lt;/td&gt;<br>
+                    &lt;/tr&gt;<br>
+                    &lt;/table&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Tables Example</title>
+                </head>
+                <body>
+                    <table>
+                        <caption>Table Caption</caption>
+                        <tr>
+                            <th>Header 1</th>
+                            <th>Header 2</th>
+                        </tr>
+                        <tr>
+                            <td>Data 1</td>
+                            <td>Data 2</td>
+                        </tr>
+                    </table>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">টেবিল ট্যাগগুলি টেবিল তৈরি করতে ব্যবহৃত হয়:</p>
+        <ul class="bengali">
+            <li><code>&lt;table&gt;</code> - একটি টেবিল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;tr&gt;</code> - একটি টেবিলে একটি সারি সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;th&gt;</code> - একটি টেবিলের হেডার সেল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;td&gt;</code> - একটি টেবিলের সেল সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;caption&gt;</code> - একটি টেবিলের ক্যাপশন সংজ্ঞায়িত করে।</li>
+        </ul>
+    </section>
+
+    <section id="section7">
+        <h2>Embedded Content</h2>
+        <p>Embedded content tags include media elements:</p>
+        <ul>
+            <li><code>&lt;img&gt;</code> - Embeds an image.</li>
+            <li><code>&lt;audio&gt;</code> - Embeds sound content.</li>
+            <li><code>&lt;video&gt;</code> - Embeds video content.</li>
+            <li><code>&lt;iframe&gt;</code> - Embeds another HTML page.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+                &lt;img src="image.jpg" alt="Image description"&gt;<br>
+                &lt;audio controls&gt;<br>
+                &lt;source src="audio.mp3" type="audio/mpeg"&gt;<br>
+                &lt;/audio&gt;<br>
+                &lt;video controls&gt;<br>
+                &lt;source src="video.mp4" type="video/mp4"&gt;<br>
+                &lt;/video&gt;<br>
+                &lt;iframe src="https://www.example.com"&gt;&lt;/iframe&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Embedded Content Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;img src="https://via.placeholder.com/150" alt="Placeholder Image"&gt;<br>
+                    &lt;audio controls&gt;<br>
+                    &lt;source src="audio.mp3" type="audio/mpeg"&gt;<br>
+                    &lt;/audio&gt;<br>
+                    &lt;video controls&gt;<br>
+                    &lt;source src="video.mp4" type="video/mp4"&gt;<br>
+                    &lt;/video&gt;<br>
+                    &lt;iframe src="https://www.example.com"&gt;&lt;/iframe&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Embedded Content Example</title>
+                </head>
+                <body>
+                    <img src='https://via.placeholder.com/150' alt='Placeholder Image'>
+                    <audio controls>
+                        <source src='audio.mp3' type='audio/mpeg'>
+                    </audio>
+                    <video controls>
+                        <source src='video.mp4' type='video/mp4'>
+                    </video>
+                    <iframe src='https://www.example.com'></iframe>
+                </body>
+                </html>
+            " width="100%" height="300" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">এম্বেডেড কন্টেন্ট ট্যাগগুলির মধ্যে মিডিয়া উপাদান অন্তর্ভুক্ত:</p>
+        <ul class="bengali">
+            <li><code>&lt;img&gt;</code> - একটি চিত্র এম্বেড করে।</li>
+            <li><code>&lt;audio&gt;</code> - শব্দ কন্টেন্ট এম্বেড করে।</li>
+            <li><code>&lt;video&gt;</code> - ভিডিও কন্টেন্ট এম্বেড করে।</li>
+            <li><code>&lt;iframe&gt;</code> - অন্য একটি HTML পৃষ্ঠা এম্বেড করে।</li>
+        </ul>
+    </section>
+
+    <section id="section8">
+        <h2>Scripting</h2>
+        <p>Scripting tags are used to define scripts:</p>
+        <ul>
+            <li><code>&lt;script&gt;</code> - Defines a client-side script.</li>
+            <li><code>&lt;noscript&gt;</code> - Defines an alternate content for users that do not support client-side scripts.</li>
+        </ul>
+        <div class="code-block">
+            <code>
+               &lt;script&gt;<br>
+                document.write("Hello, world!");<br>
+                &lt;/script&gt;<br>
+                &lt;noscript&gt;<br>
+                Your browser does not support JavaScript!<br>
+                &lt;/noscript&gt;
+            </code>
+        </div>
+        <p>Working Example:</p>
+        <details>
+            <summary>Click to see the example</summary>
+            <p><strong>HTML:</strong></p>
+            <div class="code-block">
+                <code>
+                    &lt;!DOCTYPE html&gt;<br>
+                    &lt;html&gt;<br>
+                    &lt;head&gt;<br>
+                    &lt;title&gt;Scripting Example&lt;/title&gt;<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                    &lt;script&gt;<br>
+                    document.write("Hello, world!");<br>
+                    &lt;/script&gt;<br>
+                    &lt;noscript&gt;<br>
+                    Your browser does not support JavaScript!<br>
+                    &lt;/noscript&gt;<br>
+                    &lt;/body&gt;<br>
+                    &lt;/html&gt;
+                </code>
+            </div>
+            <iframe srcdoc="
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Scripting Example</title>
+                </head>
+                <body>
+                    <script>
+                        document.write('Hello, world!');
+                    </script>
+                    <noscript>
+                        Your browser does not support JavaScript!
+                    </noscript>
+                </body>
+                </html>
+            " width="100%" height="150" style="border: none;"></iframe>
+        </details>
+        <p class="bengali">স্ক্রিপ্টিং ট্যাগগুলি স্ক্রিপ্ট সংজ্ঞায়িত করতে ব্যবহৃত হয়:</p>
+        <ul class="bengali">
+            <li><code>&lt;script&gt;</code> - একটি ক্লায়েন্ট-পার্শ্ব স্ক্রিপ্ট সংজ্ঞায়িত করে।</li>
+            <li><code>&lt;noscript&gt;</code> - যারা ক্লায়েন্ট-পার্শ্ব স্ক্রিপ্ট সমর্থন করে না তাদের জন্য বিকল্প বিষয়বস্তু সংজ্ঞায়িত করে।</li>
+        </ul>
+    </section>
+
+</div>
+
+</body>
+</html>
