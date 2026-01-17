@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const app = express();
 app.use(bodyParser.json());
 
-const genAI = new GoogleGenerativeAI(process.env.AIzaSyBK0aknGS2FremoV2ujy8k6A3gHBeueJEU);
+const genAI = new GoogleGenerativeAI(process.env.sk-a964a2dda1ce475784815cc2457b2e73);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 app.get("/", (req, res) => {
@@ -21,3 +21,4 @@ app.post("/chat", async (req, res) => {
 app.listen(process.env.PORT || 3000, () =>
   console.log("Server started")
 );
+
