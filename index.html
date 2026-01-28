@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tornado AI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            900: '#131314', // Gemini Dark Background
+                            800: '#1E1F20', // Gemini Dark Surface
+                            700: '#2D2E30',
+                        },
+                        blue: {
+                            600: '#1A73E8',
+                            400: '#8AB4F8', // Gemini Blue
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'bounce-delay': 'bounce 1s infinite', 
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+
+        /* Markdown Styles */
+        .markdown-body pre {
+            background-color: #1e1e1e;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+            border: 1px solid #374151;
+        }
+        .markdown-body code {
+            font-family: monospace;
+            font-size: 0.875em;
+        }
+        .markdown-body :not(pre) > code {
+            background-color: rgba(0, 0, 0, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 0.25rem;
+            color: #ec4899;
+        }
+        .dark .markdown-body :not(pre) > code {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f472b6;
+        }
+        .markdown-body strong {
+            font-weight: 700;
+        }
+        .markdown-body em {
+            font-style: italic;
+        }
+        .markdown-body p {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .markdown-body ul {
+            margin-left: 1rem;
+            list-style-type: disc;
+        }
+        .markdown-body ol {
+            margin-left: 1rem;
+            list-style-type: decimal;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 h-full overflow-hidden font-sans">
+
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-gray-900 transition-opacity duration-300">
+        <i data-lucide="loader-2" class="w-10 h-10 text-blue-600 animate-spin"></i>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-md w-full text-center space-y-8">
+            <div class="relative inline-block">
+                <div class="absolute inset-0 bg-blue-500 blur-2xl opacity-20 rounded-full animate-pulse"></div>
+                <div class="w-24 h-24 bg-blue-100 dark:bg-gray-800 rounded-full mx-auto flex items-center justify-center relative z-10 shadow-xl">
+                    <i data-lucide="bot" class="w-12 h-12 text-blue-600 dark:text-blue-400"></i>
+                </div>
+            </div>
+            
+            <div class="space-y-2">
+                <h1 class="text-3xl font-bold">Tornado AI</h1>
+                <p class="text-gray-500 dark:text-gray-400">Your intelligent assistant created by Joy Kumbhakar</p>
+            </div>
+
+            <div id="login-error" class="hidden p-3 bg-red-100 border border-red-200 text-red-700 rounded-lg text-sm"></div>
+
+            <div class="space-y-4 pt-4">
+                <button id="btn-login-google" class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full font-semibold transition-all shadow-lg hover:shadow-xl active:scale-95">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                        <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                        <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.84z" />
+                        <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                    </svg>
+                    Continue with Google
+                </button>
+                
+                <button id="btn-login-guest" class="w-full text-blue-600 dark:text-blue-400 font-medium hover:underline p-2">
+                    Continue as Guest
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Screen -->
+    <div id="app-screen" class="hidden flex h-full">
+        
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden backdrop-blur-sm"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed md:relative z-50 h-full w-[280px] bg-[#f0f4f9] dark:bg-[#1e1f20] transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out border-r border-gray-200 dark:border-gray-800 flex flex-col">
+            <div class="flex flex-col h-full p-4">
+                <!-- User Profile -->
+                <div class="flex items-center gap-3 p-3 mb-6 bg-white dark:bg-[#2d2d2d] rounded-xl shadow-sm">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center overflow-hidden">
+                        <img id="user-avatar" src="" alt="User" class="w-full h-full object-cover hidden">
+                        <i id="user-icon" data-lucide="user" class="w-5 h-5 text-blue-600 dark:text-blue-300"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p id="user-name" class="text-sm font-bold truncate">Guest</p>
+                        <p id="user-email" class="text-xs text-gray-500 dark:text-gray-400 truncate">Anonymous</p>
+                    </div>
+                    <button id="btn-close-sidebar" class="md:hidden text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Nav -->
+                <nav class="space-y-2 flex-1 overflow-y-auto">
+                    <button id="btn-toggle-theme" class="w-full flex items-center gap-3 px-4 py-3 rounded-full hover:bg-gray-200 dark:hover:bg-[#333] transition-colors text-sm font-medium">
+                        <i id="icon-theme" data-lucide="moon" class="w-5 h-5"></i>
+                        <span id="text-theme">Dark Mode</span>
+                    </button>
+
+                    <button id="btn-clear-chat" class="w-full flex items-center gap-3 px-4 py-3 rounded-full hover:bg-red-100 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 transition-colors text-sm font-medium">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        Clear Chat
+                    </button>
+                </nav>
+
+                <!-- Download CTA -->
+                <div class="mt-auto mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-100 dark:border-blue-800">
+                    <div class="flex items-center gap-2 mb-2 text-blue-700 dark:text-blue-300 font-semibold text-sm">
+                        <i data-lucide="smartphone" class="w-4 h-4"></i>
+                        <span>Get the Android App</span>
+                    </div>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-3">
+                        Experience Tornado AI on your mobile device for faster responses.
+                    </p>
+                    <a href="https://joykumbhakar.netlify.app/apk/app.apk" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2 rounded-lg transition-colors">
+                        Download APK
+                    </a>
+                </div>
+
+                <button id="btn-signout" class="w-full flex items-center gap-3 px-4 py-3 rounded-full hover:bg-gray-200 dark:hover:bg-[#333] transition-colors text-sm font-medium text-gray-600 dark:text-gray-400">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                    Sign Out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col min-w-0 relative h-full">
+            <!-- Header -->
+            <header class="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#131314]/80 backdrop-blur sticky top-0 z-30">
+                <div class="flex items-center gap-3">
+                    <button id="btn-open-sidebar" class="p-2 -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 md:hidden">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <span class="text-xl font-semibold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Tornado AI</span>
+                </div>
+                <button id="btn-refresh-chat" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500" title="New Chat">
+                    <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                </button>
+            </header>
+
+            <!-- Chat Area -->
+            <div id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-6 scroll-smooth">
+                <!-- Welcome State (Injected via JS if empty) -->
+                <div id="welcome-state" class="hidden h-full flex flex-col items-center justify-center max-w-2xl mx-auto text-center animate-fade-in">
+                    <div class="w-20 h-20 bg-gradient-to-tr from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+                        <i data-lucide="bot" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <h2 class="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent">Hello, <span id="welcome-name">Friend</span></h2>
+                    <p class="text-xl text-gray-400 mb-12">How can I help you today?</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full px-4">
+                        <button onclick="setPrompt('Write code')" class="p-4 bg-gray-50 dark:bg-[#1e1f20] hover:bg-gray-100 dark:hover:bg-[#2d2e30] rounded-xl text-left transition-all hover:-translate-y-1 border border-transparent dark:border-gray-800">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-3 text-blue-600 dark:text-blue-400">
+                                <i data-lucide="code" class="w-4 h-4"></i>
+                            </div>
+                            <div class="font-semibold text-sm mb-1">Write code</div>
+                            <div class="text-xs text-gray-500">Generate & debug</div>
+                        </button>
+                        <button onclick="setPrompt('Get ideas')" class="p-4 bg-gray-50 dark:bg-[#1e1f20] hover:bg-gray-100 dark:hover:bg-[#2d2e30] rounded-xl text-left transition-all hover:-translate-y-1 border border-transparent dark:border-gray-800">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-3 text-blue-600 dark:text-blue-400">
+                                <i data-lucide="lightbulb" class="w-4 h-4"></i>
+                            </div>
+                            <div class="font-semibold text-sm mb-1">Get ideas</div>
+                            <div class="text-xs text-gray-500">Brainstorm solutions</div>
+                        </button>
+                        <button onclick="setPrompt('Learn something')" class="p-4 bg-gray-50 dark:bg-[#1e1f20] hover:bg-gray-100 dark:hover:bg-[#2d2e30] rounded-xl text-left transition-all hover:-translate-y-1 border border-transparent dark:border-gray-800">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-3 text-blue-600 dark:text-blue-400">
+                                <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                            </div>
+                            <div class="font-semibold text-sm mb-1">Learn something</div>
+                            <div class="text-xs text-gray-500">Explain topics</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages List -->
+                <div id="messages-list" class="max-w-3xl mx-auto space-y-6 pb-4"></div>
+                
+                <!-- Typing Indicator -->
+                <div id="typing-indicator" class="hidden max-w-3xl mx-auto flex gap-4 mt-4">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center animate-pulse">
+                        <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div class="flex items-center gap-1 bg-white dark:bg-[#1e1f20] px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-gray-100 dark:border-gray-800">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></span>
+                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                        <span class="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 bg-white dark:bg-[#131314]">
+                <div class="max-w-3xl mx-auto relative">
+                    <div class="bg-[#f0f4f9] dark:bg-[#1e1f20] rounded-3xl flex items-end p-2 transition-colors focus-within:ring-2 ring-blue-500/20">
+                        <textarea id="user-input" placeholder="Ask anything..." rows="1" class="w-full bg-transparent border-none focus:ring-0 resize-none max-h-32 min-h-[48px] py-3 px-4 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none" style="height: auto;"></textarea>
+                        <button id="btn-send" class="p-3 rounded-full mb-1 transition-all duration-200 bg-gray-200 dark:bg-gray-700 text-gray-400 cursor-not-allowed" disabled>
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                    <p class="text-center text-[10px] text-gray-400 mt-2">
+                        Tornado AI can make mistakes. Consider checking important information.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Logic -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+        import { 
+            getAuth, 
+            signInWithPopup, 
+            GoogleAuthProvider, 
+            signInAnonymously, 
+            signOut, 
+            onAuthStateChanged, 
+            signInWithCustomToken 
+        } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js';
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            query, 
+            orderBy, 
+            onSnapshot, 
+            serverTimestamp, 
+            deleteDoc, 
+            getDocs 
+        } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+        // --- Configuration ---
+        const GEMINI_API_KEY = ""; // Environment injected
+        const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+        
+        // Environment variables handling
+        let firebaseConfig = {
+            apiKey: "AIzaSyCVLd_TvLribvwjDVb2VBe5ga3RMsacdI8",
+            authDomain: "tornadoai.firebaseapp.com",
+            projectId: "tornadoai",
+            storageBucket: "tornadoai.firebasestorage.app",
+            messagingSenderId: "8117878637",
+            appId: "1:8117878637:web:2d8bd10e053cb66f3e6464",
+            measurementId: "G-K5YTTRBQ11"
+        };
+        
+        let appId = 'default-app-id';
+
+        if (typeof __firebase_config !== 'undefined') {
+            try {
+                firebaseConfig = JSON.parse(__firebase_config);
+            } catch(e) { console.warn("Using fallback config"); }
+        }
+        if (typeof __app_id !== 'undefined') {
+            appId = __app_id;
+        }
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- State ---
+        let currentUser = null;
+        let messages = [];
+        let isDarkMode = false;
+        let isLoading = false;
+        let unsubscribeChats = null;
+
+        // --- Elements ---
+        const els = {
+            loadingScreen: document.getElementById('loading-screen'),
+            loginScreen: document.getElementById('login-screen'),
+            appScreen: document.getElementById('app-screen'),
+            sidebar: document.getElementById('sidebar'),
+            sidebarOverlay: document.getElementById('sidebar-overlay'),
+            chatContainer: document.getElementById('chat-container'),
+            messagesList: document.getElementById('messages-list'),
+            welcomeState: document.getElementById('welcome-state'),
+            typingIndicator: document.getElementById('typing-indicator'),
+            userInput: document.getElementById('user-input'),
+            btnSend: document.getElementById('btn-send'),
+            btnLoginGoogle: document.getElementById('btn-login-google'),
+            btnLoginGuest: document.getElementById('btn-login-guest'),
+            btnSignOut: document.getElementById('btn-signout'),
+            btnToggleTheme: document.getElementById('btn-toggle-theme'),
+            btnClearChat: document.getElementById('btn-clear-chat'),
+            btnRefreshChat: document.getElementById('btn-refresh-chat'),
+            btnOpenSidebar: document.getElementById('btn-open-sidebar'),
+            btnCloseSidebar: document.getElementById('btn-close-sidebar'),
+            userAvatar: document.getElementById('user-avatar'),
+            userIcon: document.getElementById('user-icon'),
+            userName: document.getElementById('user-name'),
+            userEmail: document.getElementById('user-email'),
+            welcomeName: document.getElementById('welcome-name'),
+            loginError: document.getElementById('login-error'),
+            iconTheme: document.getElementById('icon-theme'),
+            textTheme: document.getElementById('text-theme')
+        };
+
+        // --- Initialization ---
+        async function init() {
+            lucide.createIcons();
+            
+            // Check System Theme
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                toggleTheme(true);
+            }
+
+            // Auth Listener
+            const initAuth = async () => {
+                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    try {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } catch (e) {
+                         console.error("Token failed", e);
+                         // Fallback handled by onAuthStateChanged default
+                    }
+                 }
+            };
+            await initAuth();
+
+            onAuthStateChanged(auth, (user) => {
+                currentUser = user;
+                if (user) {
+                    showApp();
+                    setupFirestore(user.uid);
+                    updateUserProfile(user);
+                } else {
+                    showLogin();
+                    if(unsubscribeChats) unsubscribeChats();
+                }
+                els.loadingScreen.classList.add('opacity-0', 'pointer-events-none');
+            });
+        }
+
+        // --- Auth Functions ---
+        els.btnLoginGoogle.onclick = async () => {
+            els.loginError.classList.add('hidden');
+            try {
+                const provider = new GoogleAuthProvider();
+                await signInWithPopup(auth, provider);
+            } catch (error) {
+                els.loginError.textContent = error.message;
+                els.loginError.classList.remove('hidden');
+            }
+        };
+
+        els.btnLoginGuest.onclick = async () => {
+            els.loginError.classList.add('hidden');
+            try {
+                await signInAnonymously(auth);
+            } catch (error) {
+                els.loginError.textContent = error.message;
+                els.loginError.classList.remove('hidden');
+            }
+        };
+
+        els.btnSignOut.onclick = async () => {
+            await signOut(auth);
+            toggleSidebar(false);
+        };
+
+        function showApp() {
+            els.loginScreen.classList.add('hidden');
+            els.appScreen.classList.remove('hidden');
+        }
+
+        function showLogin() {
+            els.loginScreen.classList.remove('hidden');
+            els.appScreen.classList.add('hidden');
+        }
+
+        function updateUserProfile(user) {
+            if (user.photoURL) {
+                els.userAvatar.src = user.photoURL;
+                els.userAvatar.classList.remove('hidden');
+                els.userIcon.classList.add('hidden');
+            } else {
+                els.userAvatar.classList.add('hidden');
+                els.userIcon.classList.remove('hidden');
+            }
+            els.userName.textContent = user.displayName || "Guest User";
+            els.userEmail.textContent = user.email || "Anonymous";
+            els.welcomeName.textContent = user.displayName ? user.displayName.split(' ')[0] : 'Friend';
+        }
+
+        // --- Firestore & Chat Logic ---
+        function setupFirestore(uid) {
+            // Path: artifacts/{appId}/users/{uid}/chats
+            const chatsRef = collection(db, 'artifacts', appId, 'users', uid, 'chats');
+            const q = query(chatsRef, orderBy('timestamp', 'asc'));
+
+            unsubscribeChats = onSnapshot(q, (snapshot) => {
+                messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderMessages();
+            });
+        }
+
+        async function handleSendMessage() {
+            const text = els.userInput.value.trim();
+            if (!text || isLoading || !currentUser) return;
+
+            els.userInput.value = '';
+            els.userInput.style.height = 'auto';
+            updateSendButtonState();
+            setIsLoading(true);
+
+            // Optimistic update handled by Firestore listener, but let's show loading
+            els.typingIndicator.classList.remove('hidden');
+            scrollToBottom();
+
+            const chatsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'chats');
+            
+            try {
+                // User Message
+                await addDoc(chatsRef, {
+                    text: text,
+                    isUser: true,
+                    timestamp: serverTimestamp()
+                });
+
+                // Logic for response
+                const override = checkIdentityOverrides(text);
+                let responseText = "";
+
+                if (override) {
+                    await new Promise(r => setTimeout(r, 600));
+                    responseText = override;
+                } else {
+                    responseText = await callGeminiAPI(text);
+                }
+
+                // AI Message
+                await addDoc(chatsRef, {
+                    text: responseText,
+                    isUser: false,
+                    timestamp: serverTimestamp()
+                });
+
+            } catch (err) {
+                console.error("Chat error", err);
+                alert("Failed to send message.");
+            } finally {
+                setIsLoading(false);
+                els.typingIndicator.classList.add('hidden');
+            }
+        }
+
+        function setIsLoading(loading) {
+            isLoading = loading;
+            els.userInput.disabled = loading;
+        }
+
+        function renderMessages() {
+            els.messagesList.innerHTML = '';
+            
+            if (messages.length === 0) {
+                els.welcomeState.classList.remove('hidden');
+            } else {
+                els.welcomeState.classList.add('hidden');
+                messages.forEach(msg => {
+                    const div = document.createElement('div');
+                    div.className = `flex gap-4 ${msg.isUser ? 'justify-end' : 'justify-start'}`;
+                    
+                    let contentHtml = '';
+                    if (msg.isUser) {
+                        contentHtml = `
+                            <div class="max-w-[85%] md:max-w-[75%] rounded-2xl px-5 py-3 shadow-sm bg-[#1a73e8] dark:bg-[#8ab4f8] text-white dark:text-[#001d35] rounded-tr-sm">
+                                <p class="whitespace-pre-wrap">${escapeHtml(msg.text)}</p>
+                            </div>
+                        `;
+                    } else {
+                        contentHtml = `
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex-shrink-0 flex items-center justify-center mt-1">
+                                <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+                            </div>
+                            <div class="max-w-[85%] md:max-w-[75%] rounded-2xl px-5 py-3 shadow-sm bg-white dark:bg-[#1e1f20] border border-gray-100 dark:border-gray-800 rounded-tl-sm text-gray-800 dark:text-gray-200 markdown-body">
+                                ${parseMarkdown(msg.text)}
+                                <div class="mt-2 pt-2 border-t border-gray-100 dark:border-gray-700 flex gap-2">
+                                    <button onclick="copyText('${escapeHtml(msg.text)}')" class="text-xs text-gray-400 hover:text-blue-500 flex items-center gap-1 transition-colors">
+                                        <i data-lucide="copy" class="w-3 h-3"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    div.innerHTML = contentHtml;
+                    els.messagesList.appendChild(div);
+                });
+                lucide.createIcons();
+                scrollToBottom();
+            }
+        }
+
+        // --- Gemini API ---
+        const SYSTEM_INSTRUCTION = `You are Tornado AI, an advanced AI assistant created by Joy Kumbhakar.
+            CRITICAL FORMATTING INSTRUCTIONS:
+            1. Use **Markdown** for all responses.
+            2. Format code blocks: \`\`\`language\\ncode\\n\`\`\`
+            3. Use tables with Markdown syntax.
+            4. Keep responses clean, well-structured, and professional.
+            If asked about your identity, verify you are Tornado AI created by Joy Kumbhakar.`;
+
+        async function callGeminiAPI(prompt) {
+            try {
+                // Get context (last 5 messages)
+                const context = messages.slice(-5).map(m => ({
+                    role: m.isUser ? "user" : "model",
+                    parts: [{ text: m.text }]
+                }));
+
+                const response = await fetch(
+                    `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${GEMINI_API_KEY}`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [
+                                ...context,
+                                { role: "user", parts: [{ text: prompt }] }
+                            ],
+                            systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+                            generationConfig: {
+                                temperature: 0.8,
+                                topK: 40,
+                                topP: 0.95,
+                                maxOutputTokens: 8192,
+                            }
+                        })
+                    }
+                );
+                
+                if (!response.ok) throw new Error("API Failed");
+                const data = await response.json();
+                return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+
+            } catch (e) {
+                console.error(e);
+                return "⚠️ Error: Unable to connect to Tornado AI services.";
+            }
+        }
+
+        // --- Utilities ---
+        
+        function checkIdentityOverrides(text) {
+            const lower = text.toLowerCase();
+            if (lower.includes("jagabandhu pal")) return "**জায়গা বন্ধু পাল** হন **জয় কুম্ভকারের মামা**।";
+            if (lower.includes("shobha pal")) return "**শোভা পাল** হন **জয় কুম্ভকারের মামি**।";
+            if (lower.includes("protima pal")) return "**প্রতিমা পাল** হন **জয় কুম্ভকারের মাসি**।";
+            if (lower.includes("rinku pal")) return "**রিঙ্কু পাল** হন **জয় কুম্ভকারের মেসো**।";
+            if (lower.includes("makhan")) return "**মাখন** হন **জয় কুম্ভকারের দাদা**।";
+            if (lower.includes("tumpa")) return "**টুম্পা** হন **জয় কুম্ভকারের মা**।";
+            if (lower.includes("bholanath")) return "**ভোলানাথ** হন **জয় কুম্ভকারের বাবা**।";
+            if (lower.includes("puja kumbhakar")) return "**পূজা কুম্ভকার** হন **জয় কুম্ভকারের বোন**।";
+            if (lower.includes("kishore")) return "**কিশোর** হন **জয় কুম্ভকারের টিচার**।";
+            if (lower.includes("minoti")) return "**মিনতি** হন **জয় কুম্ভকারের দিদা (মায়ের মা)**।";
+            if (lower.includes("narayoni")) return "**নারায়ণী** হন **জয় কুম্ভকারের ঠাকুমা (বাবার মা)**।";
+            if (lower.includes("barun")) return "**বরুন** হন **জয় কুম্ভকারের দাদু (মায়ের বাবা)**।";
+            if (lower.includes("sukhamoy")) return "**সুখময়** হন **জয় কুম্ভকারের দাদু (বাবার বাবা)**।";
+            if (lower.includes("kanchan paul")) return "**কাঞ্চন পাল** হন **জয় কুম্ভকারের টিচার** যিনি আমাকে তৈরি করেছেন।";
+            if (lower.includes("sandip pal")) return "**সন্দীপ পাল** হন **জয়ের bhai**।";
+            if (lower.includes("sourav")) return "**সৌরভ পাল** হন **জয়ের বড় দাদা**।";
+            if (lower.includes("bipad")) return "**বিপদ তারণ পাল** হন **জয়ের কাকা**।";
+            if (lower.includes("piyali")) return "**পিয়ালী পাল** হন **জয়ের মিষ্টি বৌদি**।";
+            if (lower.includes("priya") || lower.includes("jhilik")) return "**প্রিয়া/ঝিলিক** হন **জয় কুম্ভকারেরও বোন**।";
+            if (lower.includes("puja")) return "**পূজা** হন **জয়ের বোন**।";
+            return null;
+        }
+
+        function scrollToBottom() {
+            setTimeout(() => {
+                els.chatContainer.scrollTop = els.chatContainer.scrollHeight;
+            }, 50);
+        }
+
+        function toggleTheme(forceDark) {
+            isDarkMode = forceDark !== undefined ? forceDark : !isDarkMode;
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+                els.textTheme.textContent = "Light Mode";
+                els.iconTheme.setAttribute('data-lucide', 'sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+                els.textTheme.textContent = "Dark Mode";
+                els.iconTheme.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        }
+
+        function toggleSidebar(show) {
+            if (show) {
+                els.sidebar.classList.remove('-translate-x-full');
+                els.sidebarOverlay.classList.remove('hidden');
+            } else {
+                els.sidebar.classList.add('-translate-x-full');
+                els.sidebarOverlay.classList.add('hidden');
+            }
+        }
+
+        // Basic Markdown Parser (Regex based)
+        function parseMarkdown(text) {
+            if (!text) return '';
+            
+            // Code blocks
+            let html = text.replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
+                return `<pre><div class="flex justify-between text-xs text-gray-400 mb-2 uppercase font-bold"><span>${lang || 'CODE'}</span></div><code>${escapeHtml(code.trim())}</code></pre>`;
+            });
+
+            // Inline Code
+            html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // Bold
+            html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            
+            // Italic
+            html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+            // Lists
+            html = html.replace(/^\s*[\-\*]\s+(.+)$/gm, '<ul class="list-disc pl-5"><li>$1</li></ul>');
+            
+            // Headers
+            html = html.replace(/^### (.*$)/gm, '<h3 class="text-lg font-bold mt-3 mb-2">$1</h3>');
+            html = html.replace(/^## (.*$)/gm, '<h2 class="text-xl font-bold mt-4 mb-2">$1</h2>');
+
+            // Paragraphs (Simple split by newline)
+            // Note: This simple parser might duplicate block tags if not careful. 
+            // A robust solution uses a library like marked.js. 
+            // For this single file constraint, we keep it simple.
+            
+            return html.replace(/\n/g, '<br>');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function updateSendButtonState() {
+            const text = els.userInput.value.trim();
+            if (text && !isLoading) {
+                els.btnSend.disabled = false;
+                els.btnSend.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-400', 'cursor-not-allowed');
+                els.btnSend.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-md');
+            } else {
+                els.btnSend.disabled = true;
+                els.btnSend.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-400', 'cursor-not-allowed');
+                els.btnSend.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700', 'shadow-md');
+            }
+        }
+
+        // --- Event Listeners ---
+        els.userInput.addEventListener('input', () => {
+            els.userInput.style.height = 'auto';
+            els.userInput.style.height = els.userInput.scrollHeight + 'px';
+            updateSendButtonState();
+        });
+
+        els.userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+            }
+        });
+
+        els.btnSend.addEventListener('click', handleSendMessage);
+        els.btnToggleTheme.addEventListener('click', () => toggleTheme());
+        els.btnOpenSidebar.addEventListener('click', () => toggleSidebar(true));
+        els.btnCloseSidebar.addEventListener('click', () => toggleSidebar(false));
+        els.sidebarOverlay.addEventListener('click', () => toggleSidebar(false));
+        els.btnClearChat.addEventListener('click', async () => {
+            if(!currentUser) return;
+            if(!confirm("Clear chat history?")) return;
+            const chatsRef = collection(db, 'artifacts', appId, 'users', currentUser.uid, 'chats');
+            const snapshot = await getDocs(chatsRef);
+            snapshot.forEach(doc => deleteDoc(doc.ref));
+            toggleSidebar(false);
+        });
+        els.btnRefreshChat.addEventListener('click', () => els.btnClearChat.click());
+
+        // Global function for welcome suggestions
+        window.setPrompt = (text) => {
+            els.userInput.value = text;
+            updateSendButtonState();
+            els.userInput.focus();
+        };
+
+        window.copyText = (text) => {
+            navigator.clipboard.writeText(text);
+            // Could add toast here
+        };
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
