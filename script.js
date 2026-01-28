@@ -23,7 +23,7 @@ import {
 // --- Configuration ---
 // IMPORTANT: This placeholder is replaced by Netlify at build time via netlify.toml
 const GEMINI_API_KEY = "PASTE_YOUR_API_KEY_HERE"; 
-const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+const MODEL_NAME = "gemini-2.5-flash";
 
 // Firebase Config
 let firebaseConfig = {
