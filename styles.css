@@ -1,0 +1,63 @@
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Markdown Styles */
+.markdown-body pre {
+    background-color: #1e1e1e;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 0.5rem 0;
+    border: 1px solid #374151;
+}
+.markdown-body code {
+    font-family: monospace;
+    font-size: 0.875em;
+}
+.markdown-body :not(pre) > code {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    color: #ec4899;
+}
+.dark .markdown-body :not(pre) > code {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #f472b6;
+}
+.markdown-body strong {
+    font-weight: 700;
+}
+.markdown-body em {
+    font-style: italic;
+}
+.markdown-body p {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+.markdown-body ul {
+    margin-left: 1rem;
+    list-style-type: disc;
+}
+.markdown-body ol {
+    margin-left: 1rem;
+    list-style-type: decimal;
+}
